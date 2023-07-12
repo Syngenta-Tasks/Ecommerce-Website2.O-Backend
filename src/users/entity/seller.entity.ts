@@ -1,16 +1,9 @@
-import {
-  Entity,
-  Column,
-  OneToOne,
-  JoinColumn,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
 import { BaseEntity } from './base-entity';
 
 @Entity()
 export class Seller extends BaseEntity {
-
   @Column({ nullable: true })
   name: string;
 
@@ -26,6 +19,4 @@ export class Seller extends BaseEntity {
   @OneToOne(() => User, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
-
-  
 }
