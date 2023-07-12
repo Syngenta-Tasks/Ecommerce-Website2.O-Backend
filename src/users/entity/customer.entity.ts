@@ -4,12 +4,14 @@ import { BaseEntity } from './base-entity';
 
 @Entity()
 export class Customer extends BaseEntity {
- 
   @Column({ nullable: true })
   name: string;
 
   @Column({ nullable: true })
   surname: string;
+
+  @Column({ nullable: true })
+  email: string;
 
   @Column({ nullable: true })
   phone: string;
@@ -20,5 +22,4 @@ export class Customer extends BaseEntity {
   @OneToOne(() => User, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
-
 }
