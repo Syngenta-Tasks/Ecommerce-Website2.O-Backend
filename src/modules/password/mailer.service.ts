@@ -1,30 +1,36 @@
 import { Injectable } from '@nestjs/common';
+import { url } from 'inspector';
 import nodemailer from 'nodemailer';
 import { createTransport, Transporter } from 'nodemailer';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Injectable()
 export class MailerService {
   private transporter: Transporter;
+  private baseUrl: string;
 
   constructor() {
     this.transporter = createTransport({
       host: 'sandbox.smtp.mailtrap.io',
       port: 587,
       auth: {
-        user: 'fece9a0822b8b2',
-        pass: '1636061bb6fa64',
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASSWORD,
       },
     });
+    this.baseUrl = process.env.BASE_URL;
   }
 
   async sendPasswordResetEmail(email: string, token: string): Promise<void> {
-    const resetPasswordUrl = `http://localhost:3000/reset/${token}`;
+    const url = `${this.baseUrl}/reset/${token}`;
 
     const mailOptions: nodemailer.SendMailOptions = {
-      from: 'nandita07@gmail.com',
+      from: process.env.MAIL_SENDER,
       to: email,
       subject: 'Password Reset',
-      text: `Reset your password using the following link: ${resetPasswordUrl}`,
+      html: `Click <a href="${url}">here</a>to reset password!`,
     };
 
     await this.transporter.sendMail(mailOptions);
