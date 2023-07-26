@@ -1,6 +1,9 @@
 import { Column, CreateDateColumn, Entity, UpdateDateColumn } from 'typeorm';
 import { BaseEntity } from './base-entity';
+
 import { Role } from 'nest-access-control';
+
+
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -13,6 +16,7 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   password: string;
 
+
   @Column({ nullable: true })
   confirm: string;
 
@@ -21,9 +25,18 @@ export class User extends BaseEntity {
   roles: Role[];
 
   
+  @Column({ nullable: true })
+  resetToken: string;
+
+  @Column({ nullable: true })
+  resetTokenExpiration: Date;
+
+
+
   @CreateDateColumn({ nullable: true })
   createdAt: Date;
 
   @UpdateDateColumn({ nullable: true })
   updatedAt: Date;
+
 }
