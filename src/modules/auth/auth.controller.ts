@@ -13,7 +13,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { UserService } from '../users/services/user.service';
 import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
-import { Role } from './role.enum';
+import { Role } from './roles.enum';
 
 @Controller('user')
 export class AuthController {
@@ -29,24 +29,17 @@ export class AuthController {
     return this.authService.generateToken(req.user);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get('user')
-  // async user(@Request() req): Promise<any> {
-  //   return req.user;
-  // }
-
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.User)
-  @Get('/user')
+  @Roles(Role.USER)
+  @Get('user')
   async getProfile(@Request() req): Promise<any> {
     return req.user;
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
-  @Get('/admin')
+  @Roles(Role.ADMIN)
+  @Get('admin')
   async getDashboard(@Request() req): Promise<any> {
     return req.user;
   }
-
 }
