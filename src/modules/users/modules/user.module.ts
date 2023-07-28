@@ -8,10 +8,17 @@ import { PasswordResetService } from 'src/modules/password/password-reset-servic
 import { PasswordReset } from 'src/modules/password/password-reset.entity';
 import { MailerService } from 'src/modules/password/mailer.service';
 
+import { RolesGuard } from 'src/modules/auth/roles.guard';
+
+
 @Module({
   controllers: [UserController, PasswordResetController],
   imports: [TypeOrmModule.forFeature([User, PasswordReset])],
+
+  providers: [UserService, PasswordResetService, MailerService, RolesGuard],
+
   providers: [UserService, PasswordResetService, MailerService],
+
 
   exports: [UserService, PasswordResetService, MailerService],
 })
