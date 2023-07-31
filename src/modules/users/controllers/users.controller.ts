@@ -1,3 +1,4 @@
+
 import {
   Body,
   Controller,
@@ -7,11 +8,16 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+
+import { Body, Controller, Post } from '@nestjs/common';
+
 import { UserService } from '../services/user.service';
 import { UserRegisterRequestDto } from '../dto/user-registration.req.dto';
 import { SETTINGS } from 'src/auth.util';
 import { User } from '../entity/user.entity';
+
 import { UpdateUserDto } from '../dto/update-user.dto';
+
 
 
 @Controller('user')
@@ -26,9 +32,11 @@ export class UserController {
     return await this.userService.doUserRegistration(userRegister);
   }
 
+
   @Get('/')
   getAllUser() {
     return this.userService.getAllUser();
   }
+
 
 }
