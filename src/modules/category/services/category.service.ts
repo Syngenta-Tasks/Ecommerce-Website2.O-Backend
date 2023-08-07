@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { Category } from '../entity/category.entity';
@@ -29,13 +29,31 @@ export class CategoryService {
     });
   }
 
-
-  async update(id: number, category: Category): Promise<Category> {
-    await this.categoryRepository.update(id, category);
-    return this.findOne(id);
+  async findCategoryByName(name: string): Promise<Category | undefined> {
+    return this.categoryRepository.findOne({ where: { name } });
   }
 
-  async remove(id: number): Promise<void> {
-    await this.categoryRepository.delete(id);
+  async updateCategoryByName(
+    name: string,
+    updatedCategory: Category,
+  ): Promise<Category> {
+    const categoryToUpdate = await this.findCategoryByName(name);
+
+    if (!categoryToUpdate) {
+      throw new NotFoundException(`Category ${name} not found`);
+    }
+
+    await this.categoryRepository.update(categoryToUpdate.id, updatedCategory);
+    return this.findOne(categoryToUpdate.id);
+  }
+  
+  async removeCategoryByName(name: string): Promise<void> {
+    const categoryToRemove = await this.findCategoryByName(name);
+
+    if (!categoryToRemove) {
+      throw new NotFoundException(`Category ${name} not found`);
+    }
+
+    await this.categoryRepository.remove(categoryToRemove);
   }
 }

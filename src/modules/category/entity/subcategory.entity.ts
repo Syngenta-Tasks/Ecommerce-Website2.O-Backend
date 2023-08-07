@@ -9,7 +9,10 @@ import { Category } from './category.entity';
 import { BaseEntity } from './base-entity';
 
 @Entity({ name: 'subcategory' })
-export class Subcategory extends BaseEntity{
+
+export class Subcategory {
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ nullable: true })
   name: string;
@@ -17,7 +20,11 @@ export class Subcategory extends BaseEntity{
   @Column({ nullable: true })
   categoryId: number;
 
-  @ManyToOne(() => Category, (category) => category.subcategories)
+  @ManyToOne(() => Category, (category) => category.subcategories, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+
   @JoinColumn({ name: 'categoryId' })
   category: Category;
 }
