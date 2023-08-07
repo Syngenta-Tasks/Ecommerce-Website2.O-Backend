@@ -9,6 +9,7 @@ import { Category } from './category.entity';
 import { BaseEntity } from './base-entity';
 
 @Entity({ name: 'subcategory' })
+
 export class Subcategory {
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,6 +24,7 @@ export class Subcategory {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+
   @JoinColumn({ name: 'categoryId' })
   category: Category;
 }

@@ -56,5 +56,4 @@ export class CategoryService {
 
     await this.categoryRepository.remove(categoryToRemove);
   }
-
 }
