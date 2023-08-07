@@ -1,0 +1,25 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+@Entity()
+export class Product {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column()
+  price: number;
+
+  @Column()
+  imageUrl: string;
+
+  @Column()
+  size: string;
+
+  @Column()
+  paymentDetails: string;
+
+  @Column()
+  deliveryDate: Date;
+}
